@@ -13,14 +13,12 @@ export default class App extends Component {
     this.state = { 
     isLoading: true
     }
-    this.images = 
-    [
+    this.images = [
       require('./app/img/outback.png'),
       require('./app/img/abbraccio.png'),
       require('./app/img/gero.png'),
       require('./app/img/pobre_juan.png'),
       require('./app/img/divinofogão.png'),
-
     ]
   }
 
@@ -34,6 +32,26 @@ export default class App extends Component {
         }}
       />
     );
+  }
+
+  ratingColorPicker = (rating) => {
+    var color;
+    if (rating < 7){
+      color = '#CD6136';
+    }else if (rating < 8){
+      color = '#CBCD36';
+    }else if (rating < 9){
+      color = '#93CD36';
+    }else{
+      color = '#3CCD36';
+    }
+    return ({
+      backgroundColor: color,
+      borderRadius: 5, //change it to 10
+      height: 25,
+      width: 25,
+      alignSelf: 'flex-end', //equivalent to 'float: right'
+    });
   }
 
   render() {
@@ -56,7 +74,7 @@ export default class App extends Component {
                   <View style={styles.horizontalAlignment}>
                     <Text style={styles.text}> {item.type}</Text>
                     <Text style={styles.text}> {item.price}</Text>
-                    <Text style={styles.rating}> {item.rating}</Text>
+                    <Text style={this.ratingColorPicker(item.rating)}> {item.rating}</Text>
                   </View>
                   <View style={styles.horizontalAlignment}>
                     <Text style={styles.text}> {item.distance}</Text>
@@ -78,14 +96,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#717171',
     width: 100,
-  },
-
-  rating: {
-    backgroundColor: '#3CCD36',
-    borderRadius: 5, //change it to 10
-    height: 25,
-    width: 25,
-    alignSelf: 'flex-end', //equivalent to 'float: right'
   },
 
   restaurantName: {
