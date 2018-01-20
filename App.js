@@ -35,18 +35,19 @@ export default class App extends Component {
   }
 
   ratingColorPicker = (rating) => {
-    var color;
+    var ratingColor;
     if (rating < 7){
-      color = '#CD6136';
+      ratingColor = '#CD6136';
     }else if (rating < 8){
-      color = '#CBCD36';
+      ratingColor = '#CBCD36';
     }else if (rating < 9){
-      color = '#93CD36';
+      ratingColor = '#93CD36';
     }else{
-      color = '#3CCD36';
+      ratingColor = '#3CCD36';
     }
     return ({
-      backgroundColor: color,
+      backgroundColor: ratingColor,
+      color: '#FFFFFF',
       borderRadius: 5, //change it to 10
       height: 25,
       width: 25,
@@ -78,6 +79,28 @@ export default class App extends Component {
 
   }
 
+  priceStyler = (price) => {
+    var priceSymbols = '';
+    var fatedSymbols = '';
+    for(var aux=1; aux<=4; aux++){
+      if (price > 0){
+        priceSymbols = priceSymbols + '$';
+      }else{
+        fatedSymbols = fatedSymbols + '$';
+      }
+      price -= 1;
+    }
+
+    return (
+      <Text style={{color: '#717171'}}>
+        { priceSymbols }
+        <Text style={{color: '#A0A0A0'}}>
+          {fatedSymbols}
+        </Text>
+      </Text>
+    );
+  }
+
   render() {
     return (
       <View>
@@ -97,7 +120,7 @@ export default class App extends Component {
                   <Text style={styles.restaurantName}> {item.name} </Text>
                   <View style={styles.horizontalAlignment}>
                     <Text style={styles.text}> {item.type}</Text>
-                    <Text style={styles.text}> {item.price}</Text>
+                    <Text style={styles.text}> {this.priceStyler(item.price)}</Text>
                     <Text style={this.ratingColorPicker(item.rating)}> {item.rating}</Text>
                   </View>
                   <View style={styles.horizontalAlignment}>
@@ -131,7 +154,7 @@ const styles = StyleSheet.create({
 
   imagePreview: {
     height: 80,
-    width: 90,
+    width: 100,
     margin: 10,
   },
 
