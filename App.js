@@ -54,6 +54,30 @@ export default class App extends Component {
     });
   }
 
+  photoPicker = (restaurantName) => {
+    var imgIndex;
+    switch(restaurantName){
+      case 'Outback Steakhouse':
+        imgIndex = 0;
+        break;
+      case 'Abbraccio Cucina Italiana':
+        imgIndex = 1;
+        break;
+      case 'Gero':
+        imgIndex = 2;
+        break;
+      case 'Pobre Juan':
+        imgIndex = 3;
+        break;
+      case 'Divino Fogão':
+        imgIndex = 4;
+        break;
+    }
+
+    return (this.images[imgIndex]);
+
+  }
+
   render() {
     return (
       <View>
@@ -67,7 +91,7 @@ export default class App extends Component {
             <View>
               <View style={styles.horizontalAlignment}>
                 <Image
-                    style={styles.imagePreview} source={this.images[0]}
+                    style={styles.imagePreview} source={this.photoPicker(item.name)}
                 />
                 <View>
                   <Text style={styles.restaurantName}> {item.name} </Text>
