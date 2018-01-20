@@ -47,17 +47,23 @@ export default class App extends Component {
           keyExtractor={item => item.name}
           renderItem = {({ item }) => 
             <View>
-              <View>
-                <Text style={styles.restaurantName}> {item.name} </Text>
-                <Text style={styles.text}> {item.type}</Text>
-                <Text style={styles.text}> {item.price}</Text>
-                <Text style={styles.text}> {item.distance}</Text>
-                <Text style={styles.text}> {item.neigborhood}</Text>
-                <Text style={styles.rating}> {item.rating}</Text>
+              <View style={styles.horizontalAlignment}>
+                <Image
+                    style={styles.imagePreview} source={this.images[0]}
+                />
+                <View>
+                  <Text style={styles.restaurantName}> {item.name} </Text>
+                  <View style={styles.horizontalAlignment}>
+                    <Text style={styles.text}> {item.type}</Text>
+                    <Text style={styles.text}> {item.price}</Text>
+                    <Text style={styles.rating}> {item.rating}</Text>
+                  </View>
+                  <View style={styles.horizontalAlignment}>
+                    <Text style={styles.text}> {item.distance}</Text>
+                    <Text style={styles.text}> {item.neigborhood}</Text>
+                  </View>
+                </View>
               </View>
-              <Image
-                  style={styles.imagePreview} source={this.images[0]}
-              />
               <Text> { "\"" + item.comment + "\"" }</Text>
             </View>
           }
@@ -71,20 +77,33 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   text: {
     color: '#717171',
-
+    width: 100,
   },
+
   rating: {
     backgroundColor: '#3CCD36',
+    borderRadius: 5, //change it to 10
+    height: 25,
+    width: 25,
+    alignSelf: 'flex-end', //equivalent to 'float: right'
   },
 
   restaurantName: {
+    fontSize: 20,
     color: '#D06600',
+    marginTop: 10,
+    marginBottom: 10,
   },
-
 
   imagePreview: {
-    height: 70,
-    width: 70,
+    height: 80,
+    width: 90,
     margin: 10,
   },
+
+  horizontalAlignment: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
 })
