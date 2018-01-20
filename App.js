@@ -28,7 +28,7 @@ export default class App extends Component {
         style={{
           height: 1,
           width: "100%",
-          backgroundColor: "#607D8B",
+          backgroundColor: "#E0E0E0",
         }}
       />
     );
@@ -106,34 +106,34 @@ export default class App extends Component {
       <View>
         <Header />
         <Categories />
-        <FlatList
-          data={ restaurantsData.list }
-          ItemSeparatorComponent = {this.flatListItemSeparator}
-          keyExtractor={item => item.name}
-          renderItem = {({ item }) => 
-            <View>
-              <View style={styles.horizontalAlignment}>
-                <Image
-                    style={styles.imagePreview} source={this.photoPicker(item.name)}
-                />
-                <View>
-                  <Text style={styles.restaurantName}> {item.name} </Text>
-                  <View style={styles.horizontalAlignment}>
-                    <Text style={styles.text}> {item.type}</Text>
-                    <Text style={styles.text}> {this.priceStyler(item.price)}</Text>
-                    <Text style={this.ratingColorPicker(item.rating)}> {item.rating}</Text>
-                  </View>
-                  <View style={styles.horizontalAlignment}>
-                    <Text style={styles.text}> {item.distance}</Text>
-                    <Text style={styles.text}> {item.neigborhood}</Text>
+          <FlatList
+            style={{ marginBottom: 150}}
+            data={ restaurantsData.list }
+            ItemSeparatorComponent = {this.flatListItemSeparator}
+            keyExtractor={item => item.name}
+            renderItem = {({ item }) => 
+              <View>
+                <View style={styles.horizontalAlignment}>
+                  <Image
+                      style={styles.imagePreview} source={this.photoPicker(item.name)}
+                  />
+                  <View>
+                    <Text style={styles.restaurantName}> {item.name} </Text>
+                    <View style={styles.horizontalAlignment}>
+                      <Text style={styles.text}> {item.type}</Text>
+                      <Text style={styles.text}> {this.priceStyler(item.price)}</Text>
+                      <Text style={this.ratingColorPicker(item.rating)}> {item.rating}</Text>
+                    </View>
+                    <View style={styles.horizontalAlignment}>
+                      <Text style={styles.text}> {item.distance}</Text>
+                      <Text style={styles.text}> {item.neigborhood}</Text>
+                    </View>
                   </View>
                 </View>
+                <Text> { "\"" + item.comment + "\"" }</Text>
               </View>
-              <Text> { "\"" + item.comment + "\"" }</Text>
-            </View>
-          }
-        />
-
+            }
+          />
       </View>
     );
   }
