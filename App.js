@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import {View, Image, FlatList, Text, List, ListItem, StyleSheet} from 'react-native';
+import {View, Image, FlatList, Text, List, ListItem, StyleSheet, ActivityIndicator} from 'react-native';
 import Header from './app/components/Header';
 import Categories from './app/components/Categories';
 import restaurantsData from './restaurants.json';
 
 export default class App extends Component {
 
+  state = {
+    loaded: false,
+  }
+
   constructor(props) {
  
     super(props);
+
+    this.loader(v => this.setState({loaded: true}));
  
-    this.state = { 
-    isLoading: true
-    }
     this.images = [
       require('./app/img/outback.png'),
       require('./app/img/abbraccio.png'),
@@ -20,6 +23,10 @@ export default class App extends Component {
       require('./app/img/pobre_juan.png'),
       require('./app/img/divinofogão.png'),
     ]
+  }
+
+  loader(cb){
+    setTimeout(cb, 1500); // 1.5s - simulating server request
   }
 
   flatListItemSeparator = () => {
@@ -112,9 +119,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <Header />
-        <Categories />
+        {this.state.loaded ? (
+          // this is fired when it's loaded:
+          <View>
+          <Categories />
           <FlatList
             style={{ marginBottom: 150}}
             data={ restaurantsData.list }
@@ -131,7 +141,7 @@ export default class App extends Component {
                     <View style={styles.horizontalAlignment}>
                       <Text style={styles.text}> {item.type}</Text>
                       <Text style={styles.text}> {this.priceStyler(item.price)}</Text>
-                      <Text style={this.ratingColorPicker(item.rating)}> {item.rating}</Text>
+                      <Text style={this.ratingColorPicker(item.rating)}> {(item.rating).toFixed(1)}</Text>
                     </View>
                     <View style={styles.horizontalAlignment}>
                       <Text style={styles.text}> {this.distanceFormatter(item.distance)}</Text>
@@ -142,16 +152,28 @@ export default class App extends Component {
                 <Text> { "\"" + item.comment + "\"" }</Text>
               </View>
             }
-          />
+          /> 
+          </View>
+        ) :
+          //this is fired when it's still loading:
+          <ActivityIndicator style={styles.screenLoader} size="large" color="#D06600" />
+        }
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   text: {
     color: '#717171',
     width: 100,
+  },
+
+  screenLoader: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   restaurantName: {
