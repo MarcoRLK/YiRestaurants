@@ -2,6 +2,8 @@
 
 Esta é a solução do teste 2 do processo seletivo de estágio da YiMobile desenvolvida por Marco Kuroiva.
 
+![](https://raw.githubusercontent.com/wiki/MarcoRLK/YiRestaurants/imgs/running_Yi.gif)
+
 ## Como executar
 
 O tutorial a seguir se baseia nas instruções do site oficial do React Native:
@@ -94,3 +96,23 @@ sudo react-native start
 Este comando executará o Metro Bundler. Agora você pode atualizar a aplicação no emulador apertando rapidamente 'RR'.
 
 ## A Solução
+
+Este projeto foi desenvolvido utilizando React Native, que permite a criação de apps nativos para Android e IOS utilizando exclusivamente Javascript.
+
+O principal objetivo é reproduzir uma pela de um aplicativo de restaurantes baseando-se em uma screenshot e algumas especificações de layout. Para isso, foram fornecidos arquivos de imagem e um json com os dados dos restaurantes.
+
+### O app
+
+A aplicação obedece a estrutura de componentes do React, e foi dividida em 3 pricipais: Header, Categories e Flatlist (que se encontra em App.js).
+
+#### Header
+
+Trata-se de um cabeçalho. Para seguir o padrão especificado, foi necessária a instalação e utilização do pacote `react-native-linear-gradient`, para o degradê, e `react-native-fontawesome` para os icones.
+
+#### Categories
+
+As categorias são imagens dispostas no formato de carrossel, com textos sobrepostos. Para a sua implementação, foi utilizado um componente ScrollView horizontal.
+
+#### FlatList
+
+Trata-se do componente principal da aplicação. Ele é composto pelos dados fornecidos pelo json. Sua implementação foi um pouco complexa do que as outras, pois exigia o uso de algumas funções, como: `ratingColorPicker()` -para as diferentes cores das avaliações- , `distanceFormatter()` -para exibir as distâncias dentro de na unidade de medida adequada- entre outros.
