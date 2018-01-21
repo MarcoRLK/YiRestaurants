@@ -101,6 +101,15 @@ export default class App extends Component {
     );
   }
 
+  distanceFormatter = (distance) => {
+    if (distance < 1000){
+      return (distance + ' m');
+    }else{
+      distance = (distance/1000).toFixed(1);
+      return (distance + ' km');
+    }
+  }
+
   render() {
     return (
       <View>
@@ -125,7 +134,7 @@ export default class App extends Component {
                       <Text style={this.ratingColorPicker(item.rating)}> {item.rating}</Text>
                     </View>
                     <View style={styles.horizontalAlignment}>
-                      <Text style={styles.text}> {item.distance}</Text>
+                      <Text style={styles.text}> {this.distanceFormatter(item.distance)}</Text>
                       <Text style={styles.text}> {item.neigborhood}</Text>
                     </View>
                   </View>
