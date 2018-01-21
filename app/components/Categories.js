@@ -59,16 +59,17 @@ const styles = StyleSheet.create({
 
   textImage: {
     flex: 1,
+    fontSize: 10,
     color: 'white',
     textAlign: 'center',
-    paddingTop: 60,
-    backgroundColor: 'rgba(0, 0, 0, .3)'
+    paddingTop: 50,
+    backgroundColor: 'rgba(0, 0, 0, .3)',
   },
 
   scrollImage: {
-    width: 90,
-    height: 90,
-    margin: 10,
+    width: 70,
+    height: 70,
+    margin: 7,
   },
 
 })

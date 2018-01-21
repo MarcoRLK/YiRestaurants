@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Image, FlatList, Text, List, ListItem, StyleSheet, ActivityIndicator} from 'react-native';
+import { View, Image, FlatList, Text, List, ListItem, StyleSheet, ActivityIndicator } from 'react-native';
 import Header from './app/components/Header';
 import Categories from './app/components/Categories';
 import restaurantsData from './restaurants.json';
@@ -11,11 +11,11 @@ export default class App extends Component {
   }
 
   constructor(props) {
- 
+
     super(props);
 
-    this.loader(v => this.setState({loaded: true}));
- 
+    this.loader(v => this.setState({ loaded: true }));
+
     this.images = [
       require('./app/img/outback.png'),
       require('./app/img/abbraccio.png'),
@@ -25,7 +25,7 @@ export default class App extends Component {
     ]
   }
 
-  loader(cb){
+  loader(cb) {
     setTimeout(cb, 1500); // 1.5s - simulating server request
   }
 
@@ -43,28 +43,29 @@ export default class App extends Component {
 
   ratingColorPicker = (rating) => {
     var ratingColor;
-    if (rating < 7){
+    if (rating < 7) {
       ratingColor = '#CD6136';
-    }else if (rating < 8){
+    } else if (rating < 8) {
       ratingColor = '#CBCD36';
-    }else if (rating < 9){
+    } else if (rating < 9) {
       ratingColor = '#93CD36';
-    }else{
+    } else {
       ratingColor = '#3CCD36';
     }
     return ({
       backgroundColor: ratingColor,
       color: '#FFFFFF',
+      fontSize: 11,
       borderRadius: 5, //change it to 10
-      height: 25,
-      width: 25,
-      alignSelf: 'flex-end', //equivalent to 'float: right'
+      height: 20,
+      width: 20,
+      margin: 10,
     });
   }
 
   photoPicker = (restaurantName) => {
     var imgIndex;
-    switch(restaurantName){
+    switch (restaurantName) {
       case 'Outback Steakhouse':
         imgIndex = 0;
         break;
@@ -89,19 +90,19 @@ export default class App extends Component {
   priceStyler = (price) => {
     var priceSymbols = '';
     var fatedSymbols = '';
-    for(var aux=1; aux<=4; aux++){
-      if (price > 0){
+    for (var aux = 1; aux <= 4; aux++) {
+      if (price > 0) {
         priceSymbols = priceSymbols + '$';
-      }else{
+      } else {
         fatedSymbols = fatedSymbols + '$';
       }
       price -= 1;
     }
 
     return (
-      <Text style={{color: '#717171'}}>
-        { priceSymbols }
-        <Text style={{color: '#A0A0A0'}}>
+      <Text style={{ color: '#717171' }}>
+        {priceSymbols}
+        <Text style={{ color: '#A0A0A0' }}>
           {fatedSymbols}
         </Text>
       </Text>
@@ -109,50 +110,59 @@ export default class App extends Component {
   }
 
   distanceFormatter = (distance) => {
-    if (distance < 1000){
+    if (distance < 1000) {
       return (distance + ' m');
-    }else{
-      distance = (distance/1000).toFixed(1);
+    } else {
+      distance = (distance / 1000).toFixed(1);
       return (distance + ' km');
     }
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Header />
         {this.state.loaded ? (
           // this is fired when it's loaded:
           <View>
-          <Categories />
-          <FlatList
-            style={{ marginBottom: 150}}
-            data={ restaurantsData.list }
-            ItemSeparatorComponent = {this.flatListItemSeparator}
-            keyExtractor={item => item.name}
-            renderItem = {({ item }) => 
-              <View>
-                <View style={styles.horizontalAlignment}>
-                  <Image
-                      style={styles.imagePreview} source={this.photoPicker(item.name)}
-                  />
-                  <View>
-                    <Text style={styles.restaurantName}> {item.name} </Text>
+            <Categories />
+            <FlatList
+              style={{ marginBottom: 150 }}
+              data={restaurantsData.list}
+              ItemSeparatorComponent={this.flatListItemSeparator}
+              keyExtractor={item => item.name}
+              renderItem={({ item }) =>
+                <View>
+
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={styles.horizontalAlignment}>
-                      <Text style={styles.text}> {item.type}</Text>
-                      <Text style={styles.text}> {this.priceStyler(item.price)}</Text>
-                      <Text style={this.ratingColorPicker(item.rating)}> {(item.rating).toFixed(1)}</Text>
+                      
+                      <Image
+                        style={styles.imagePreview} source={this.photoPicker(item.name)}
+                      />
+                      <View>
+                        <View>
+                          <Text style={styles.restaurantName}> {item.name} </Text>
+                        </View>
+                        <View style={styles.horizontalAlignment}>
+                          <Text style={styles.text}> {item.type}</Text>
+                          <Text style={styles.text}> {this.priceStyler(item.price)}</Text>
+                        </View>
+                        <View style={styles.horizontalAlignment}>
+                          <Text style={styles.text}> {this.distanceFormatter(item.distance)}</Text>
+                          <Text style={styles.text}> {item.neigborhood}</Text>
+                        </View>
+                      </View>
                     </View>
-                    <View style={styles.horizontalAlignment}>
-                      <Text style={styles.text}> {this.distanceFormatter(item.distance)}</Text>
-                      <Text style={styles.text}> {item.neigborhood}</Text>
-                    </View>
+
+                    <Text style={this.ratingColorPicker(item.rating)}> {(item.rating).toFixed(1)}</Text>
                   </View>
+                  <Text style={{ fontSize: 10, marginBottom: 5 }}> {"\"" + item.comment + "\""}</Text>
+
+                  
                 </View>
-                <Text> { "\"" + item.comment + "\"" }</Text>
-              </View>
-            }
-          /> 
+              }
+            />
           </View>
         ) :
           //this is fired when it's still loading:
@@ -167,7 +177,9 @@ const styles = StyleSheet.create({
 
   text: {
     color: '#717171',
-    width: 100,
+    width: 70,
+    marginVertical: 1,
+    fontSize: 10,
   },
 
   screenLoader: {
@@ -177,16 +189,15 @@ const styles = StyleSheet.create({
   },
 
   restaurantName: {
-    fontSize: 20,
+    fontSize: 17,
     color: '#D06600',
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 7,
   },
 
   imagePreview: {
-    height: 80,
-    width: 100,
-    margin: 10,
+    height: 60,
+    width: 90,
+    margin: 5,
   },
 
   horizontalAlignment: {
