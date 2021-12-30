@@ -1,6 +1,6 @@
 # YiRestaurants
 
-Esta é a solução desenvolvida por Marco Kuroiva.
+Solução desenvolvida por Marco Kuroiva.
 <div style="text-align:center">
   <img src ="https://raw.githubusercontent.com/wiki/MarcoRLK/YiRestaurants/imgs/running_Yi.gif" />
 </div>
